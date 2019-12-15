@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}To Do Page History{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+<h1>This is the To do page History.</h1>
+
+<ul>
+  {% for todo_item in all_items %}
+    <li>{{ todo_item.content }}
+      
+	
+    </li>
+
+
+  {% endfor %}
+</ul>
+<p><a class="btn btn-primary" href="/todo">Back</a></p>
+
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">login</a>
+{% endif %}
+{% endblock %}
+
+
