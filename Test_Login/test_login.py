@@ -20,8 +20,40 @@ def test_viewLogin():
     op = webdriver.ChromeOptions()
     op.add_argument('headless')
     driver = webdriver.Chrome(options=op)
-    results = driver.get('localhost:8000/login')
-    assert results == "Login"
-#Test Case 2
-#Test Case 3
-#Test Case 4
+    results = driver.get('localhost:8000/accounts/login')
+    assert results == 'Login'
+    driver.quit()
+
+#Test Case 2 | Test Empty fields
+def test_emptyFields():
+    op = webdriver.ChromeOptions()
+    op.add_argument('headless')
+    driver = webdriver.Chrome(options=op)
+    Username = ''
+    Password = ''
+    user = driver.find_element_by_xpath('//*[@id="id_username"]')
+    com = driver.find_element_by_xpath('//*[@id="id_password"]')
+    #Send text into input
+    user.send_keys(Username)
+    com.send_keys(Password)
+    #Click on Login button
+    login = driver.find_element_by_xpath('//*[@id="LoginBtn"]').click()
+    assert login == driver.get('localhost:8000/accounts/login')
+    driver.quit()
+
+#Test Case 3 | Test Valid account
+def test_validAccount():
+    op = webdriver.ChromeOptions()
+    op.add_argument('headless')
+    driver = webdriver.Chrome(options=op)
+    Username = 'kazooie20'
+    Password = '123456789'
+    user = driver.find_element_by_xpath('//*[@id="id_username"]')
+    com = driver.find_element_by_xpath('//*[@id="id_password"]')
+    #Send text into input
+    user.send_keys(Username)
+    com.send_keys(Password)
+    #Click on Login button
+    login = driver.find_element_by_xpath('//*[@id="LoginBtn"]').click()
+    assert login == driver.get('localhost:8000/todo')
+    driver.quit()
