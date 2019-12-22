@@ -14,52 +14,71 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-#Developer's Login Page Unit Test
-
+#Developer's Todo Page Unit Test
+executable_path=r'C:\Users\Reynaldi\Documents\ETI-CA2\chromedriver.exe'
 #Test Case 1 | View Todo Page with no login
 def test_viewTodo():
-    #op = webdriver.ChromeOptions()
-    #op.add_argument('headless')
+    op = webdriver.ChromeOptions()
+    op.add_argument('headless')
     #driver = webdriver.Chrome(options=op)
-    driver = webdriver.Chrome()
-    driver.get('localhost:8000/todo')
     
+    driver = webdriver.Chrome(executable_path)
+    driver.get('localhost:8000/todo')
+    time.sleep(3)
     assert driver.title == "Login"
+    driver.quit()
 
 #Test Case 2 | View Todo Page with login
 def test_viewTodoLogin():
-    driver = webdriver.Chrome()
+    op = webdriver.ChromeOptions()
+    op.add_argument('headless')
+    driver = webdriver.Chrome(executable_path)
     driver.get('localhost:8000/accounts/login')
-    driver.find_element_by_name('username').send_keys('Reynaldi')
+    Username = 'Reynaldi'
+    Password = '123456789'
+    user = driver.find_element_by_name('username')
     time.sleep(2)
-    driver.find_element_by_name('password').send_keys('123456789')
-    time.sleep(2)
-    driver.find_element_by_id("LoginBtn").click()
-    time.sleep(1)
-    driver.get('localhost:8000/todo')
+    com = driver.find_element_by_name('password')
+    user.send_keys(Username)
+    com.send_keys(Password)
+    #driver.find_element_by_id("LoginBtn").click()
+    login = driver.find_element_by_xpath('//*[@id="LoginBtn"]').click()
+    time.sleep(5)
     assert driver.title == "To Do Page"
+    driver.quit()
     
     
     
 #Test Case 3 Test if the add function works
 def test_addtoDo():
-    driver = webdriver.Chrome()
+    op = webdriver.ChromeOptions()
+    op.add_argument('headless')
+    driver = webdriver.Chrome(executable_path)
     driver.get('localhost:8000/accounts/login')
-    driver.find_element_by_name('username').send_keys('Reynaldi')
+    Username = 'Reynaldi'
+    Password = '123456789'
+    user = driver.find_element_by_name('username')
     time.sleep(2)
-    driver.find_element_by_name('password').send_keys('123456789')
-    time.sleep(2)
+    com = driver.find_element_by_name('password')
+    user.send_keys(Username)
+    com.send_keys(Password)
     driver.find_element_by_id("LoginBtn").click()
-    driver.find_element_by_name('content').send_keys('Testing')
-    time.sleep(2)
-    driver.find_element_by_name('Adding').click()
-    time.sleep(2)
+    #driver.find_element_by_name('content').send_keys('Testingx')
+    #time.sleep(2)
+    #driver.find_element_by_name('Adding').click()
+    #time.sleep(2)
     time.sleep(1)
-    
+    #login = driver.find_element_by_xpath('//*[@id="LoginBtn"]').click()
+    inputtxt = driver.find_element_by_xpath('/html/body/main/form/input[2]')
+    inputtxt.send_keys('Testx1')
+    addbtn = driver.find_element_by_xpath('/html/body/main/form/input[3]').click()
+    time.sleep(5)
     assert driver.title == "To Do Page"
+    driver.quit()
+    
 #Test Case 4 Test if the delete function works
 def test_deltoDo():
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(executable_path)
     driver.get('localhost:8000/accounts/login')
     driver.find_element_by_name('username').send_keys('Reynaldi')
     time.sleep(1)
@@ -68,14 +87,15 @@ def test_deltoDo():
     driver.find_element_by_id("LoginBtn").click()
     time.sleep(1)
     driver.find_element_by_name('deleting').click()
-    time.sleep(1)
+    time.sleep(7)
   
     
     assert driver.title == "To Do Page"
+    driver.quit()
 
 #Test Case 5 Test if the history page button works
 def test_HistoryToDo():
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(executable_path)
     driver.get('localhost:8000/accounts/login')
     driver.find_element_by_name('username').send_keys('Reynaldi')
     time.sleep(2)
@@ -85,6 +105,7 @@ def test_HistoryToDo():
     time.sleep(2)
     driver.find_element_by_name('hist').click()
     time.sleep(2)
-    
+    time.sleep(7)
     
     assert driver.title == "To Do Page History"
+    driver.quit()
