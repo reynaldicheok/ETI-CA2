@@ -5,7 +5,6 @@
 #Refactor
 #Repeat
 
-
 import os
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -18,15 +17,17 @@ from selenium.webdriver.support import expected_conditions as EC
 
 #Test Case 1 | View Signup Page
 def test_viewSignup():
-    driver = webdriver.Chrome()
-    results = driver.get('localhost:8000/signup')
-    assert results == driver.get('localhost:8000/signup')
+    
+    driver = webdriver.Firefox()
+    results = driver.get("http://localhost:8000/signup/")
+    assert results == driver.get("http://localhost:8000/signup/")
+    driver.quit()
 
 #Test Case 2 | Test Empty Parameters
 def test_emptyParam():
 
-    driver = webdriver.Chrome()
-    driver.get('localhost:8000/signup')
+    driver = webdriver.Firefox()
+    driver.get('http://localhost:8000/signup')
     Username = ''
     Password = ''
     CfmPassword = ''
@@ -44,13 +45,13 @@ def test_emptyParam():
     com2.send_keys(CfmPassword)
     #Click on Signup button
     register = driver.find_element_by_xpath('/html/body/main/form/button').click()
-    assert register == driver.get('localhost:8000/signup') #Not suppose to register and prompt error so it should still be at signup
+    assert register == driver.get('http://localhost:8000/signup') #Not suppose to register and prompt error so it should still be at signup
     driver.quit()
 
 #Test Case 3 | Test Valid parameters
 def test_validAccount():
-    driver = webdriver.Chrome()
-    driver.get('localhost:8000/signup')
+    driver = webdriver.Firefox()
+    driver.get('http://localhost:8000/signup')
     Username = 'helloworld5'
     Password = 'IDH36225G'
     CfmPassword = 'IDH36225G'
@@ -68,6 +69,5 @@ def test_validAccount():
     com2.send_keys(CfmPassword)
     #Click on Signup button
     register = driver.find_element_by_xpath('/html/body/main/form/button').click()
-    assert register == driver.get('localhost:8000/accounts/login') #Pass if redirected to login page
+    assert register == driver.get('http://localhost:8000/accounts/login') #Pass if redirected to login page
     driver.quit()
-   
