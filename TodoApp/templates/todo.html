@@ -7,7 +7,7 @@
 
 <ul>
   {% for todo_item in all_items %}
-    <li>{{ todo_item.content }}
+    <li>{{ todo_item.content }} Created at {{ todo_item.timestamp }}
       <form action="/deleteTodo/{{todo_item.id}}/"
             style="display: inline;"
             method="post">{% csrf_token %}

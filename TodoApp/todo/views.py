@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .models import TodoItem , TodoItemHistory
+from datetime import date
+
 
 def todo_viewhistory(request):
     if request.user.is_authenticated:      
@@ -19,15 +21,15 @@ def todo_view(request):
     else:
         return HttpResponseRedirect('/accounts/login')
         print("Fail")
-
-    all_todo_items = TodoItem.objects.all()
+    all_todo_items = TodoItem.objects.filter(user=request.user)
     return render(request, 'todo.html',
         {'all_items': all_todo_items})
 
 def add_todo(request):
-    new_item = TodoItem(content = request.POST['content'])
+    
+    new_item = TodoItem(content = request.POST['content'],timestamp = date.today(),user=request.user)
     new_item.save()
-    history_item = TodoItemHistory(content = request.POST['content'])
+    history_item = TodoItemHistory(content = request.POST['content'],timestamp = date.today())
     history_item.save()
     return HttpResponseRedirect('/todo/')
 

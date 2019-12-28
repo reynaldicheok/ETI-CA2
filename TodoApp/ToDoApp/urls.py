@@ -19,6 +19,7 @@ from todo.views import todo_view, add_todo, delete_todo, check_login, todo_viewh
 from django.views.generic.base import TemplateView # new
 from django.conf.urls import url
 from Login.views import signup
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     #path('todo/',todoView),
@@ -30,6 +31,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('history/',todo_viewhistory),
     path('signup/', signup),
+    path("projects/", include("projects.urls")),
     
     # new
 ]
