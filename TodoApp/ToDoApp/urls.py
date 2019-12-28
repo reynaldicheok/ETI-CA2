@@ -17,8 +17,8 @@ from django.contrib import admin
 from django.urls import path,include #new
 from todo.views import todo_view, add_todo, delete_todo, check_login, todo_viewhistory
 from django.views.generic.base import TemplateView # new
-
-
+from django.conf.urls import url
+from Login.views import signup
 urlpatterns = [
     path('admin/', admin.site.urls),
     #path('todo/',todoView),
@@ -29,6 +29,7 @@ urlpatterns = [
     path('deleteTodo/<int:todo_id>/', delete_todo),
     path('accounts/', include('django.contrib.auth.urls')),
     path('history/',todo_viewhistory),
+    path('signup/', signup),
     
     # new
 ]
