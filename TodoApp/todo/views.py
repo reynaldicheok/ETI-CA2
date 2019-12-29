@@ -11,7 +11,7 @@ def todo_viewhistory(request):
         return HttpResponseRedirect('/accounts/login')
         print("Fail")
 
-    all_todo_items = TodoItemHistory.objects.all()
+    all_todo_items = TodoItemHistory.objects.filter(user=request.user)
     return render(request, 'todohistory.html',
         {'all_items': all_todo_items})
 
@@ -29,7 +29,7 @@ def add_todo(request):
     
     new_item = TodoItem(content = request.POST['content'],timestamp = date.today(),user=request.user)
     new_item.save()
-    history_item = TodoItemHistory(content = request.POST['content'],timestamp = date.today())
+    history_item = TodoItemHistory(content = request.POST['content'],timestamp = date.today(),user=request.user)
     history_item.save()
     return HttpResponseRedirect('/todo/')
 
