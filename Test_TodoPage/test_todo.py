@@ -4,7 +4,7 @@
 #Retest
 #Refactor
 #Repeat
-from django.test import LiveServerTestCase
+from django.test import LiveServerTestCase, TestCase, Client
 import time
 import os
 from selenium import webdriver
@@ -16,6 +16,13 @@ from selenium.webdriver.support import expected_conditions as EC
 
 #Developer's Todo Page Unit Test
 executable_path=r'C:\Users\Reynaldi\Documents\ETI-CA2\chromedriver.exe'
+def setUp(self):    
+    print('Setup')
+    self.unauth_client = Client()
+    self.auth_client = Client()
+    self.auth_client.login(username='Reynaldi',password='123456789')
+
+        
 #Test Case 1 | View Todo Page with no login
 def test_viewTodo():
     op = webdriver.ChromeOptions()
@@ -87,8 +94,9 @@ def test_deltoDo():
     driver.find_element_by_id("LoginBtn").click()
     time.sleep(1)
     driver.find_element_by_name('deleting').click()
-    time.sleep(7)
-  
+    time.sleep(3)
+    driver.switch_to.alert.accept()
+    time.sleep(6)
     
     assert driver.title == "To Do Page"
     driver.quit()
@@ -109,3 +117,4 @@ def test_HistoryToDo():
     
     assert driver.title == "To Do Page History"
     driver.quit()
+
